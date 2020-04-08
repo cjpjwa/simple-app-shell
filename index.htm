@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<!-- general  -->
+<title>Simple App Shell</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords" content="webapp, pwa, app shell" />
+<meta name="description" content="Simple App Shell" />
+<meta name="Author" content="P. Janko" />
+<!-- manifest file -->
+<link rel="manifest" href="manifest.json" />
+<!-- ios webapp  -->
+<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+<!-- chrome webapp  -->
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="theme-color" content="#cccccc" />
+<link rel="icon" sizes="144x144" href="icon_144.png" />
+<link rel="icon" sizes="192x192" href="icon_192.png" />
+<link rel="icon" sizes="512x512" href="icon_512.png" />
+<!-- win tile icon and background  -->
+<meta name="msapplication-TileColor" content="#999999" />
+<meta name="msapplication-TileImage" content="icon_144.png" />
+<!-- icon -->
+<link rel="shortcut icon" href="favicon.ico" />
+<style>
+/* ########## basic page settings ##########  */
+body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family:sans-serif; overflow:auto;-webkit-text-size-adjust: none;}
+*:focus 			{outline: none;}
+.page				{padding: 0px; margin:0px; display:none;-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;-o-user-select: none;user-select: none;}
+
+.header				{position:fixed; top: 0px;  left: 0px; padding:0px; margin:0px; background:#333333; height:55px; width:100%; z-index:100}
+.header	h1			{position:fixed; top:14px;  left:50px; padding:0px; margin:0px; color:#eeeeee; font-weight:normal; font-size:22px;}
+.header	a			{position:fixed; padding:7px; margin:0px; color:#eeeeee; font-weight:normal; font-size:16px; border: 1px solid #eeeeee; border-radius:5px;}
+.header	a.button0	{display:block; top:14px; left: 15px; text-decoration:none; padding:0px; margin:0px; color:#eeeeee; font-weight:normal; font-size:22px; border:none}
+.header	a.button1	{display:block; top:10px; right:10px; text-decoration:none;}
+.header	a.button2	{display:block; top:10px; right:70px; text-decoration:none;}
+.header	a:active	{color:#333333; background:#eeeeee}
+
+.content			{position:absolute; top:55px; left:0px; width:100%; padding: 0px; margin:0px; color:#333333;; z-index:10;}
+.content h2			{padding: 0px; margin:10px 25px 10px 25px; font-size:20px; font-weight:bold;}
+.content p 			{padding: 0px; margin:10px 25px 10px 25px; font-size:14px; font-weight:normal;}
+.content li			{padding: 0px 0px 5px 0px; margin: 0px; font-size:14px; font-weight:normal;}
+.content a			{color:#333333}
+
+.content button 		{color:#eeeeee; text-align:center; padding:15px 10px 15px 10px; margin:0px; background:#333333; border:1px solid #eeeeee; cursor:pointer; border-radius:5px; font-size:16px; font-weight: normal;}
+.content button.blarge 	{display:block; width:90%; margin:20px auto;}
+.content button.bsmall 	{display:inline-block; width:41%; margin:10px;}
+.content button.blite 	{color:#333333; background:#eeeeee; border:1px solid #333333;}
+
+/* to switch off safari ios style of form elements use:  -webkit-appearance:none */
+.content select			{color:#eeeeee; padding:10px 0px 10px 30%; margin:0px; width:90%; background:#333333; border:1px solid #eeeeee; border-radius:5px; font-size:16px;}
+
+/* ########## footer settings ##########  */
+p.footer			{padding:10px 0px 10px 0px; margin:0px; color:#333333; font-weight:normal; font-size:14px; text-align:center;}
+p.footer a			{color:#333333}
+
+/* ########## info settings ##########  */
+#info .content h2	{padding: 10px 30px 10px 30px; margin: 0px; font-weight:bold; font-size:20px;}
+#info .content p	{padding:  5px 30px 10px 30px; margin: 0px; text-align:justify}
+#info .content ul	{padding:  5px 30px 10px 30px; margin: 0px 0px 0px 5%}
+#info .content li	{text-align:left}
+
+/* Larger than 800px  */
+@media (min-width: 800px) {
+.content		{width:800px; left:50%; margin-left:-400px; margin-top:20px;}
+}
+</style>
+<script>
+//##########################################################
+// Simple App Shell, (c) 2020 webapps@cjpj, P. Janko
+// MIT License: https://www.cjpj.de/contact.htm#terms
+//##########################################################
+// Date			Version			Description
+// 18.01.2020	0.01			initial version
+// 07.02.2020	0.1				remove break from showPage() function,
+//								add hashchange handler to initapp() function
+//##########################################################
+
+//strict mode
+"use strict";
+
+//##########################################################
+//basic global vars
+var appVersion = "0.1";
+var appRelease = "07.02.2020";
+//global array with all pages
+var appPages = new Array();
+
+//status messages
+var msgS01 = "Online";
+var msgS02 = "Offline";
+var msgS03 = "Yes - available Offline";
+var msgS04 = "No - <a href=\"index.htm\">Load in Cache</a>";
+var msgS05 = "Update available - <a href=\"index.htm\">Load</a>";
+
+
+//##########################################################
+//register the serviceworker
+if ("serviceWorker" in navigator) {
+	window.addEventListener("load", function() {
+		navigator.serviceWorker.register("/serviceworker.js").then(function(registration) {
+			updateViaCache: "none";    //bypass http cache
+			// Registration was successful
+			//console.log("ServiceWorker registration successful with scope: ", registration.scope);
+			//check for update
+			registration.addEventListener("updatefound", function() {
+				document.getElementById("supdate").innerHTML = msgS05;
+			});
+		}).catch(function(err) {
+			// registration failed :(
+			//console.log("ServiceWorker registration failed: ", err);
+		});
+	});
+}
+//##########################################################
+
+
+//##########################################################
+//set div page display from none to block
+//- hashid:	hash ID of page to show
+function showPage(hashid) {
+	//set first page for no hashid given
+	var divID = appPages[0].getAttribute("id");
+	//get page div id from hash
+	if ((hashid !== "") && (hashid !== undefined)) {divID = location.hash.substring(1);}
+	//hide all pages first
+	for (var i = 0; i < appPages.length; i++) {
+		var pageID1 = appPages[i].getAttribute("id");
+		document.getElementById(pageID1).style.display = "none";
+	}
+	//only show pages for existing IDs (whitelist)
+	var whitelistPage = false;
+	for (var n = 0; n < appPages.length; n++) {
+		var pageID2 = appPages[n].getAttribute("id");
+		if (divID === pageID2) {whitelistPage = true;}
+	}
+	//set first page for id not whitelisted
+	if (!whitelistPage) {divID = appPages[0].getAttribute("id");}
+	//show page and scroll to top
+	document.getElementById(divID).style.display = "block";
+	document.body.scrollTop = 0; 			//Chrome, Safari
+	document.documentElement.scrollTop= 0;	//Firefox, IE
+}
+
+
+//##########################################################
+//set app status for network, chaching
+//Note: update is handled in SW registration
+function setAppStatus() {
+	//set network status initial and listener
+	if (window.navigator.onLine) {document.getElementById("snet").innerHTML = msgS01;} else {document.getElementById("snet").innerHTML = msgS02;}
+	window.addEventListener("online", function(e)  {document.getElementById("snet").innerHTML = msgS01;});
+	window.addEventListener("offline", function(e) {document.getElementById("snet").innerHTML = msgS02;});
+	//set cache status (considered as chached if index.htm found)
+	try {
+		caches.match("/index.htm").then(function(cacheResponse) {
+			//console.log('#####cacheResponse ', cacheResponse);
+			if (cacheResponse) {
+				document.getElementById("scache").innerHTML = msgS03;
+			} else {
+				document.getElementById("scache").innerHTML = msgS04;
+			}
+		});
+	} catch(err) {
+		//console.log('#####cacheError ', err);
+		document.getElementById("scache").innerHTML = "-";
+	}
+}
+
+
+//##########################################################
+//init app, set version, check deep links, show start page
+function initApp() {
+	//fill array with pages
+	appPages = document.querySelectorAll("div.page");
+	//show start page or deep link page
+	showPage(location.hash);
+	//init handler for hash navigation
+	window.addEventListener("hashchange", function() {showPage(location.hash);});
+	//set version
+	document.getElementById("version").innerHTML = appVersion;
+	document.getElementById("release").innerHTML = appRelease;
+	var footerVer = document.querySelectorAll("span.fversion");
+	for (var i = 0; i < footerVer.length; i++) {
+		footerVer[i].innerHTML = appVersion;
+	}
+	//set app status
+	setAppStatus();
+}
+
+
+//##########################################################
+//
+//            YOUR CODE MAY BE INCLUDED HERE
+//
+//##########################################################
+</script>
+</head>
+<body onload="initApp()">
+<noscript><h1 style="text-align:center">Please activate Javascript<br/>to run this web app!</h1></noscript>
+<!-- ###################### START PAGE ##############################  -->
+<div class="page" id="appstart">
+	<div class="header">
+		<h1 style="left:10px">Simple App Shell</h1>
+		<a class="button2" href="#sample">Sample</a>
+		<a class="button1" href="#info">Info</a>
+	</div>
+	<div class="content">
+		<br />
+		<h2>Overview</h2>
+		<p>This is the <a href="https://www.cjpj.de/appshell.htm" target="_blank" rel="noopener">Simple App Shell</a>. It provides a simple and basic HTML, CSS and Javascript shell for your Progessive Web App.
+		You can find sample web apps under <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">www.cjpj.de/webapps.htm</a>.</p>
+		<p>The basic features are:</p>
+		<ul>
+			<li><a href="https://www.cjpj.de/appshell.htm#hashnavi" target="_blank" rel="noopener">Hash Navigation</a></li>
+			<li><a href="https://www.cjpj.de/appshell.htm#swcache" target="_blank" rel="noopener">Serviceworker Caching</a></li>
+			<li><a href="https://www.cjpj.de/appshell.htm#basicui" target="_blank" rel="noopener">Basic User Interface</a></li>
+		</ul>
+		<br />
+		<p class="footer">Simple App Shell <span class="fversion"></span></p>
+	</div>	
+</div>
+
+<!-- ###################### SAMPLE PAGE ##############################  -->
+<div class="page" id="sample">
+	<div class="header">
+		<a class="button0" href="#appstart">&lt;&lt;</a>
+		<h1>Sample Header</h1>
+		<a class="button2" href="javascript:void(0)" onclick="alert('Button 2');">Button 2</a>
+		<a class="button1" href="#info">Info</a>
+	</div>
+	<div class="content">
+		<br />
+		<h2>Sample Topic</h2>
+		<p>This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.<br />
+		This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.<br />
+		This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.<br />
+		This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.</p>
+		<ul>
+			<li>Sample List Element</li>
+			<li>Sample List Element</li>
+			<li>Sample List Element</li>
+			<li>Sample List Element</li>
+		</ul>
+		<h2>Sample Elements</h2>
+		<button class="blarge" type="button" onclick="alert('Button Large');">Button large</button>
+		<div style="text-align:center">
+		<button class="bsmall blite" type="button" onclick="alert('Button Small Lite');">Button small</button>
+		<button class="bsmall" type="button" onclick="alert('Button Small');">Button small</button>
+		<br />
+		<label for="selectbox" style="color:#cccccc">Select Box:</label>
+		<select name="selectbox" id="selectbox">
+			<option value="0" selected="selected">Select Box</option>
+			<option value="1">Value 1</option>
+			<option value="2">Value 2</option>
+			<option value="3">Value 3</option>
+		</select>
+		</div>
+		<br />
+		<p class="footer">Footer with Version: <span class="fversion"></span></p>
+	</div>
+</div>
+
+<!-- ###################### ABOUT PAGE ##############################  -->
+<div class="page" id="info">
+	<div class="header">
+		<a class="button0" href="#appstart">&lt;&lt;</a>
+		<h1>Your App Info</h1>
+		<a class="button1" href="#appstart">Button 1</a>
+	</div>
+	<div class="content">
+		<h2 style="margin-top:8px">About</h2>
+		<p>Your app information can be included here (description, legal stuff, etc.)</p>
+ 		<hr />
+		<h2>Status</h2>
+		<ul>
+			<li>Network: <strong id="snet">-</strong></li>
+			<li>Cached: <strong id="scache">-</strong></li>
+			<li>Update: <strong id="supdate">No Update available</strong></li>
+		</ul>
+		<hr />
+		<h2>Info</h2>
+		<ul>
+			<li>App Title: <strong>Your App Title</strong></li>
+			<li>Version: <strong id="version">-</strong></li>
+			<li>Release Date: <strong id="release">-</strong></li>
+			<li>Website: <a href="#" target="_blank" rel="noopener">Your App Website</a></li>
+			<li><a href="#" target="_blank" rel="noopener">Detailed Description</a></li>
+			<li><a href="#" target="_blank" rel="noopener">Terms of Use (License)</a></li>
+			<li><a href="#" target="_blank" rel="noopener">Data Protection</a></li>
+		</ul>
+		<hr />
+		<h2>Imprint</h2>
+		<ul>
+			<li>Author: Your name</li>
+			<li>Street: Your street</li>
+			<li>City: Your city</li>
+			<li>Country:  Your country</li>
+			<li>Phone: Your phone</li>
+			<li>Email: <a href="#">Your email</a></li>
+			<li>Website: <a href="#" target="_blank" rel="noopener">Your website</a></li>
+		</ul>
+		<hr />
+		<h2>Open Source Licenses</h2>
+		<ul>
+			<li><a href="https://www.cjpj.de/appshell.htm" target="_blank" rel="noopener">Simple App Shell</a> licensed under <a href="https://www.cjpj.de/contact.htm#terms" target="_blank" rel="noopener">The MIT License (MIT)</a></li>
+		</ul>
+		<br />
+	</div>
+</div>
+
+</body>
+</html>
