@@ -93,4 +93,5 @@ The basic template includes an info page that shows version and status info. Sta
 
 The manifest.json holds basic information about your PWA. You may set at least the short-name and name for your web app. For more information see https://developers.google.com/web/fundamentals/web-app-manifest
 
-
+## Samples
+You can find samples based on Simple App Shell at: https://www.cjpj.de/webapps.htm
