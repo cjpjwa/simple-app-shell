@@ -43,7 +43,7 @@ body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family
 
 .content			{position:absolute; top:55px; left:0px; width:100%; padding: 0px; margin:0px; color:#333333;; z-index:10;}
 .content h2			{padding: 0px; margin:10px 25px 10px 25px; font-size:20px; font-weight:bold;}
-.content p 			{padding: 0px; margin:10px 25px 10px 25px; font-size:14px; font-weight:normal;}
+.content p 			{padding: 0px; margin:10px 25px 10px 25px; font-size:14px; font-weight:normal; line-height: 20px}
 .content li			{padding: 0px 0px 5px 0px; margin: 0px; font-size:14px; font-weight:normal;}
 .content a			{color:#333333}
 
@@ -77,8 +77,9 @@ p.footer a			{color:#333333}
 //##########################################################
 // Date			Version			Description
 // 18.01.2020	0.01			initial version
-// 07.02.2020	0.1				remove break from showPage() function,
-//								add hashchange handler to initapp() function
+// 07.02.2020	0.1			remove break from showPage() function,
+//					add hashchange handler to initapp() function
+// 28.02.2020	0.2			changed showPage(hashid) to showPage()
 //##########################################################
 
 //strict mode
@@ -86,8 +87,8 @@ p.footer a			{color:#333333}
 
 //##########################################################
 //basic global vars
-var appVersion = "0.1";
-var appRelease = "07.02.2020";
+var appVersion = "0.2";
+var appRelease = "28.02.2020";
 //global array with all pages
 var appPages = new Array();
 
@@ -121,13 +122,12 @@ if ("serviceWorker" in navigator) {
 
 
 //##########################################################
-//set div page display from none to block
-//- hashid:	hash ID of page to show
-function showPage(hashid) {
+//set div page display from none to block based on hash
+function showPage() {
 	//set first page for no hashid given
 	var divID = appPages[0].getAttribute("id");
 	//get page div id from hash
-	if ((hashid !== "") && (hashid !== undefined)) {divID = location.hash.substring(1);}
+	if ((location.hash !== "") && (location.hash !== undefined)) {divID = location.hash.substring(1);}
 	//hide all pages first
 	for (var i = 0; i < appPages.length; i++) {
 		var pageID1 = appPages[i].getAttribute("id");
@@ -179,9 +179,9 @@ function initApp() {
 	//fill array with pages
 	appPages = document.querySelectorAll("div.page");
 	//show start page or deep link page
-	showPage(location.hash);
+	showPage();
 	//init handler for hash navigation
-	window.addEventListener("hashchange", function() {showPage(location.hash);});
+	window.addEventListener("hashchange", showPage);
 	//set version
 	document.getElementById("version").innerHTML = appVersion;
 	document.getElementById("release").innerHTML = appRelease;
