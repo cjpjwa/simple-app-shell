@@ -41,19 +41,33 @@ body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family
 .header	a.button2	{display:block; top:10px; right:70px; text-decoration:none;}
 .header	a:active	{color:#333333; background:#eeeeee}
 
-.content			{position:absolute; top:55px; left:0px; width:100%; padding: 0px; margin:0px; color:#333333;; z-index:10;}
+.content			{padding: 0px; margin:0px; position:absolute; top:55px; left:0px; width:100%; color:#333333;; z-index:10;}
 .content h2			{padding: 0px; margin:10px 25px 10px 25px; font-size:20px; font-weight:bold;}
 .content p 			{padding: 0px; margin:10px 25px 10px 25px; font-size:14px; font-weight:normal; line-height: 20px}
 .content li			{padding: 0px 0px 5px 0px; margin: 0px; font-size:14px; font-weight:normal;}
 .content a			{color:#333333}
 
-.content button 		{color:#eeeeee; text-align:center; padding:15px 10px 15px 10px; margin:0px; background:#333333; border:1px solid #eeeeee; cursor:pointer; border-radius:5px; font-size:16px; font-weight: normal;}
-.content button.blarge 	{display:block; width:90%; margin:20px auto;}
-.content button.bsmall 	{display:inline-block; width:41%; margin:10px;}
+.content button 		{padding:15px 10px 15px 10px; margin:0px; color:#eeeeee; text-align:center; background:#333333; border:1px solid #eeeeee; cursor:pointer; border-radius:5px; font-size:16px; font-weight:normal;}
+.content button.blarge 	{margin:10px auto; display:block; width:90%; }
+.content button.bsmall 	{margin:10px; display:inline-block; width:41%;}
 .content button.blite 	{color:#333333; background:#eeeeee; border:1px solid #333333;}
 
+.content ul.radiolist					{padding:0px; margin:10px 5% 10px 5%; list-style-type:none;}
+.content ul.radiolist li				{padding:0px; margin:0px; background:#ffffff; border-bottom: 1px solid #999999; border-left: 1px solid #333333; border-right: 1px solid #333333; text-align:left;}
+.content ul.radiolist li input			{padding:1px; margin:10px 20px 10px 20px; width:22px; height:22px; border:1px solid #333333}
+.content ul.radiolist li label			{padding:6px 0px 6px 0px; margin:0px; position:relative; top:-4px; display:inline-block; width:75%; font-weight:normal; font-size:16px; text-align:left}
+.content ul.radiolist li:first-child 	{border-top-left-radius:5px; border-top-right-radius:5px; border-top: 1px solid #333333;}
+.content ul.radiolist li:last-child 	{border-bottom-left-radius:5px; border-bottom-right-radius:5px; border-bottom: 1px solid #333333;}
+.content ul.radiolist li:hover 			{background:#eeeeee;}
+
 /* to switch off safari ios style of form elements use:  -webkit-appearance:none */
-.content select			{color:#eeeeee; padding:10px 0px 10px 30%; margin:0px; width:90%; background:#333333; border:1px solid #eeeeee; border-radius:5px; font-size:16px;}
+.content fieldset						{padding:0px; margin:10px 5% 10px 5%; font-size:16px; font-weight: normal; display:block; color:#333333; text-align:left; border:1px solid #333333; border-radius:5px;}
+.content legend                         {padding:0px 10px 0px 10px; margin:0px; text-align:center}
+.content label							{padding:0px; margin:10px 25px 10px 25px; font-size:16px; font-weight:normal; display:block; text-align:center}
+.content label.cblabel					{padding:6px 0px 6px 0px; margin:0px; position:relative; top:-5px;  display:inline-block; width:auto; font-weight:normal; font-size:16px;}
+.content select							{padding:10px 0px 10px 30%; margin:0px 0px 10px 0px; color:#eeeeee; width:90%; background:#333333; border:1px solid #eeeeee; border-radius:5px; font-size:16px;}
+.content input[type="text"]				{padding:10px; margin:10px auto; display:block; width:85%;  border:1px solid #333333; border-radius:5px; font-size:16px;}
+.content input[type="checkbox"]			{padding: 1px; margin:10px 20px 10px 20px; width:22px; height:22px; border:1px solid #333333}
 
 /* ########## footer settings ##########  */
 p.footer			{padding:10px 0px 10px 0px; margin:0px; color:#333333; font-weight:normal; font-size:14px; text-align:center;}
@@ -80,6 +94,7 @@ p.footer a			{color:#333333}
 // 07.02.2020	0.1			remove break from showPage() function,
 //					add hashchange handler to initapp() function
 // 28.02.2020	0.2			changed showPage(hashid) to showPage()
+// 10.04.2020	0.3			add new sample elements (text, radio, checkbox)
 //##########################################################
 
 //strict mode
@@ -87,8 +102,8 @@ p.footer a			{color:#333333}
 
 //##########################################################
 //basic global vars
-var appVersion = "0.2";
-var appRelease = "28.02.2020";
+var appVersion = "0.3";
+var appRelease = "10.04.2020";
 //global array with all pages
 var appPages = new Array();
 
@@ -249,11 +264,13 @@ function initApp() {
 		</ul>
 		<h2>Sample Elements</h2>
 		<button class="blarge" type="button" onclick="alert('Button Large');">Button large</button>
+
 		<div style="text-align:center">
 		<button class="bsmall blite" type="button" onclick="alert('Button Small Lite');">Button small</button>
 		<button class="bsmall" type="button" onclick="alert('Button Small');">Button small</button>
 		<br />
-		<label for="selectbox" style="color:#cccccc">Select Box:</label>
+		<br />
+		<label for="selectbox">Select Box Label</label>
 		<select name="selectbox" id="selectbox">
 			<option value="0" selected="selected">Select Box</option>
 			<option value="1">Value 1</option>
@@ -262,6 +279,22 @@ function initApp() {
 		</select>
 		</div>
 		<br />
+		<label for="inputtext">Text Input Label:</label>
+		<input type="text" name="inputtext" id="inputtext" value="" placeholder="Sample Input Text" />
+		<br />
+		<ul class="radiolist">
+			<li><input type="radio" name="radioType" id="radio0" value="0" /><label id="labelr0" for="radio0" class="color_0">Radio Button Label 0</label></li>
+			<li><input type="radio" name="radioType" id="radio1" value="1" /><label id="labelr1" for="radio1" class="color_1">Radio Button Label 1</label></li>
+			<li><input type="radio" name="radioType" id="radio2" value="2" /><label id="labelr2" for="radio2" class="color_2">Radio Button Label 2</label></li>
+		</ul>
+		<br />
+		<fieldset>
+			<legend> Check Box Legend </legend>
+			<input type="checkbox" name="cbox0" id="cbox0" value="" /><label class="cblabel" id="labelc0" for="cbox0">Check Box Label 0</label><br />
+			<input type="checkbox" name="cbox1" id="cbox1" value="" /><label class="cblabel" id="labelc1" for="cbox1">Check Box Label 1</label><br />
+			<input type="checkbox" name="cbox2" id="cbox2" value="" /><label class="cblabel" id="labelc2" for="cbox2">Check Box Label 2</label><br />
+		</fieldset>
+
 		<p class="footer">Footer with Version: <span class="fversion"></span></p>
 	</div>
 </div>
