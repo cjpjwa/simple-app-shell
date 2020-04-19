@@ -48,7 +48,7 @@ body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family
 .content a			{color:#333333}
 
 .content button 		{padding:15px 10px 15px 10px; margin:0px; color:#eeeeee; text-align:center; background:#333333; border:1px solid #eeeeee; cursor:pointer; border-radius:5px; font-size:16px; font-weight:normal;}
-.content button.blarge 	{margin:10px auto; display:block; width:90%; }
+.content button.blarge 	{margin:10px auto; display:block; width:90%;}
 .content button.bsmall 	{margin:10px; display:inline-block; width:41%;}
 .content button.blite 	{color:#333333; background:#eeeeee; border:1px solid #333333;}
 
@@ -68,6 +68,12 @@ body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family
 .content select							{padding:10px 0px 10px 30%; margin:0px 0px 10px 0px; color:#eeeeee; width:90%; background:#333333; border:1px solid #eeeeee; border-radius:5px; font-size:16px;}
 .content input[type="text"]				{padding:10px; margin:10px auto; display:block; width:85%;  border:1px solid #333333; border-radius:5px; font-size:16px;}
 .content input[type="checkbox"]			{padding: 1px; margin:10px 20px 10px 20px; width:22px; height:22px; border:1px solid #333333}
+
+.content table 							{border:1px solid #333333; margin:10px 5% 10px 5%; width:90%; font-size:16px; border-radius:5px}
+.content table th						{padding: 10px; background: #333333; color:#eeeeee}
+.content table td						{padding: 10px; text-align:center;}
+.content table tr:nth-child(odd) 		{background-color: #eeeeee;}
+
 
 /* ########## footer settings ##########  */
 p.footer			{padding:10px 0px 10px 0px; margin:0px; color:#333333; font-weight:normal; font-size:14px; text-align:center;}
@@ -95,6 +101,7 @@ p.footer a			{color:#333333}
 //					add hashchange handler to initapp() function
 // 28.02.2020	0.2			changed showPage(hashid) to showPage()
 // 10.04.2020	0.3			add new sample elements (text, radio, checkbox)
+// 19.04.2020	0.4			add table styles
 //##########################################################
 
 //strict mode
@@ -102,8 +109,8 @@ p.footer a			{color:#333333}
 
 //##########################################################
 //basic global vars
-var appVersion = "0.3";
-var appRelease = "10.04.2020";
+var appVersion = "0.4";
+var appRelease = "19.04.2020";
 //global array with all pages
 var appPages = new Array();
 
@@ -294,7 +301,15 @@ function initApp() {
 			<input type="checkbox" name="cbox1" id="cbox1" value="" /><label class="cblabel" id="labelc1" for="cbox1">Check Box Label 1</label><br />
 			<input type="checkbox" name="cbox2" id="cbox2" value="" /><label class="cblabel" id="labelc2" for="cbox2">Check Box Label 2</label><br />
 		</fieldset>
-
+		<br />
+		<table>
+			<tr><th>Head1</th><th>Head2</th><th>Head3</th><th>Head4</th></tr>
+			<tr><td>cell11</td><td>cell12</td><td>cell13</td><td>cell14</td></tr>
+			<tr><td>cell21</td><td>cell22</td><td>cell23</td><td>cell24</td></tr>
+			<tr><td>cell31</td><td>cell32</td><td>cell33</td><td>cell34</td></tr>
+			<tr><td>cell41</td><td>cell42</td><td>cell43</td><td>cell44</td></tr>
+		</table>
+		<br />
 		<p class="footer">Footer with Version: <span class="fversion"></span></p>
 	</div>
 </div>

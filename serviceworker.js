@@ -1,9 +1,9 @@
 //########################################
 // serviceworker for Simple App Shell
-// Version: 16.04.2020 16:15
+// Version: 19.04.2020 18:15
 //########################################
 
-var cacheName = 'simple_appshell_20_04_16_16_15';
+var cacheName = 'simple_appshell_20_04_19_18_15';
 var urlsToCache = [
 	'/',
 	'/index.htm',
