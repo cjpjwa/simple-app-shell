@@ -95,4 +95,7 @@ The manifest.json holds basic information about your PWA. You may set at least t
 
 ## Samples
 You can find samples based on Simple App Shell at: https://www.cjpj.de/webapps.htm
-Samples in this repository are https://github.com/cjpjwa/simple-tracer and https://github.com/cjpjwa/schmerzlog 
+
+Samples in this repository are 
+- https://github.com/cjpjwa/simple-tracer
+- https://github.com/cjpjwa/schmerzlog 
