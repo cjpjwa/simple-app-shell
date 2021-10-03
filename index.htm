@@ -96,13 +96,14 @@ p.footer a			{color:#333333}
 // MIT License: https://www.cjpj.de/contact.htm#terms
 //##########################################################
 // Date			Version			Description
-// 18.01.2020	0.01			initial version
+// 18.01.2020	0.01		initial version
 // 07.02.2020	0.1			remove break from showPage() function,
-//					add hashchange handler to initapp() function
+//							add hashchange handler to initapp() function
 // 28.02.2020	0.2			changed showPage(hashid) to showPage()
 // 10.04.2020	0.3			add new sample elements (text, radio, checkbox)
 // 19.04.2020	0.4			add table styles
 // 10.08.2020	0.5			add maskable icon
+// 27.02.2021	0.6			use const and let instead of var
 //##########################################################
 
 //strict mode
@@ -110,17 +111,17 @@ p.footer a			{color:#333333}
 
 //##########################################################
 //basic global vars
-var appVersion = "0.5";
-var appRelease = "10.08.2020";
+const appVersion = "0.6";
+const appRelease = "27.02.2021";
 //global array with all pages
-var appPages = new Array();
+let appPages = new Array();
 
 //status messages
-var msgS01 = "Online";
-var msgS02 = "Offline";
-var msgS03 = "Yes - available Offline";
-var msgS04 = "No - <a href=\"index.htm\">Load in Cache</a>";
-var msgS05 = "Update available - <a href=\"index.htm\">Load</a>";
+const msgS01 = "Online";
+const msgS02 = "Offline";
+const msgS03 = "Yes - available Offline";
+const msgS04 = "No - <a href=\"index.htm\">Load in Cache</a>";
+const msgS05 = "Update available - <a href=\"index.htm\">Load</a>";
 
 
 //##########################################################
@@ -148,18 +149,20 @@ if ("serviceWorker" in navigator) {
 //set div page display from none to block based on hash
 function showPage() {
 	//set first page for no hashid given
-	var divID = appPages[0].getAttribute("id");
+	let divID = appPages[0].getAttribute("id");
 	//get page div id from hash
 	if ((location.hash !== "") && (location.hash !== undefined)) {divID = location.hash.substring(1);}
 	//hide all pages first
-	for (var i = 0; i < appPages.length; i++) {
-		var pageID1 = appPages[i].getAttribute("id");
+	let pageID1;
+	for (let i = 0; i < appPages.length; i++) {
+		pageID1 = appPages[i].getAttribute("id");
 		document.getElementById(pageID1).style.display = "none";
 	}
 	//only show pages for existing IDs (whitelist)
-	var whitelistPage = false;
-	for (var n = 0; n < appPages.length; n++) {
-		var pageID2 = appPages[n].getAttribute("id");
+	let whitelistPage = false;
+	let pageID2;
+	for (let n = 0; n < appPages.length; n++) {
+		pageID2 = appPages[n].getAttribute("id");
 		if (divID === pageID2) {whitelistPage = true;}
 	}
 	//set first page for id not whitelisted
@@ -208,8 +211,8 @@ function initApp() {
 	//set version
 	document.getElementById("version").innerHTML = appVersion;
 	document.getElementById("release").innerHTML = appRelease;
-	var footerVer = document.querySelectorAll("span.fversion");
-	for (var i = 0; i < footerVer.length; i++) {
+	let footerVer = document.querySelectorAll("span.fversion");
+	for (let i = 0; i < footerVer.length; i++) {
 		footerVer[i].innerHTML = appVersion;
 	}
 	//set app status

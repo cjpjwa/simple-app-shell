@@ -1,10 +1,10 @@
 //########################################
 // serviceworker for Simple App Shell
-// Version: 10.08.2020 17:50
+// Version: 27.02.2021 17:50
 //########################################
 
-var cacheName = 'simple_appshell_20_08_10_17_50';
-var urlsToCache = [
+const cacheName = 'simple_appshell_21_02_27_17_50';
+const urlsToCache = [
 	'/',
 	'/index.htm',
 	'/apple-touch-icon.png',
