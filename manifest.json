@@ -28,5 +28,20 @@
 	"display": "standalone",
 	"background_color": "#CCCCCC",
 	"theme_color": "#CCCCCC",
-	"orientation": "any"
+	"orientation": "any",
+	"description": "A simple and basic shell for Progessive Web Apps (PWA)",
+	"screenshots": [
+		{
+			"src": "screenshot1.png",
+			"type": "image/png",
+			"sizes": "360x720",
+			"form_factor": "narrow"
+		},
+		{
+			"src": "screenshot2.png",
+			"type": "image/png",
+			"sizes": "720x360",
+			"form_factor": "wide"
+		}
+	]
 }
