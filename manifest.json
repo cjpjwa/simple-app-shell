@@ -13,6 +13,11 @@
 			"type": "image/png"
 		},
 		{
+			"src": "icon_196.png",
+			"sizes": "196x196",
+			"type": "image/png"
+		},
+		{
 			"src": "icon_512.png",
 			"sizes": "512x512",
 			"type": "image/png"
@@ -21,10 +26,11 @@
 			"src": "icon_maskable.png",
 			"sizes": "196x196",
 			"type": "image/png",
-			"purpose": "any maskable"
+			"purpose": "maskable"
 		}
 	],
-	"start_url": "index.htm",
+	"id": "/index.htm",
+	"start_url": "/index.htm",
 	"display": "standalone",
 	"background_color": "#CCCCCC",
 	"theme_color": "#CCCCCC",

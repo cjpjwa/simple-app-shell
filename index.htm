@@ -3,30 +3,30 @@
 <head> 
 <!-- general  -->
 <title>Simple App Shell</title>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="keywords" content="webapp, pwa, app shell" />
-<meta name="description" content="Simple App Shell" />
-<meta name="Author" content="P. Janko" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="webapp, pwa, app shell">
+<meta name="description" content="Simple App Shell">
+<meta name="Author" content="P. Janko">
 <!-- manifest file -->
-<link rel="manifest" href="manifest.json" />
+<link rel="manifest" href="manifest.json">
 <!-- ios webapp  -->
-<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta name="format-detection" content="telephone=no" />
-<link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- chrome webapp  -->
-<meta name="mobile-web-app-capable" content="yes" />
-<meta name="theme-color" content="#cccccc" />
-<link rel="icon" sizes="144x144" href="icon_144.png" />
-<link rel="icon" sizes="192x192" href="icon_192.png" />
-<link rel="icon" sizes="512x512" href="icon_512.png" />
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#cccccc">
+<link rel="icon" sizes="144x144" href="icon_144.png">
+<link rel="icon" sizes="192x192" href="icon_192.png">
+<link rel="icon" sizes="512x512" href="icon_512.png">
 <!-- win tile icon and background  -->
-<meta name="msapplication-TileColor" content="#999999" />
-<meta name="msapplication-TileImage" content="icon_144.png" />
+<meta name="msapplication-TileColor" content="#999999">
+<meta name="msapplication-TileImage" content="icon_144.png">
 <!-- icon -->
-<link rel="shortcut icon" href="favicon.ico" />
+<link rel="shortcut icon" href="favicon.ico">
 <style>
 /* ########## basic page settings ##########  */
 body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family:sans-serif; overflow:auto;-webkit-text-size-adjust: none;}
@@ -105,6 +105,7 @@ p.footer a			{color:#333333}
 // 10.08.2020	0.5			add maskable icon
 // 27.02.2021	0.6			use const and let instead of var
 // 18.02.2023	0.7			update manifest with screenshots and description
+// 17.04.2023	0.8			update manifest with id and icon_196.png, remove trailing slash on void elements
 //##########################################################
 
 //strict mode
@@ -112,8 +113,8 @@ p.footer a			{color:#333333}
 
 //##########################################################
 //basic global vars
-const appVersion = "0.7";
-const appRelease = "18.02.2023";
+const appVersion = "0.8";
+const appRelease = "17.04.2023";
 //global array with all pages
 let appPages = new Array();
 
@@ -229,7 +230,7 @@ function initApp() {
 </script>
 </head>
 <body onload="initApp()">
-<noscript><h1 style="text-align:center">Please activate Javascript<br/>to run this web app!</h1></noscript>
+<noscript><h1 style="text-align:center">Please activate Javascript<br>to run this web app!</h1></noscript>
 <!-- ###################### START PAGE ##############################  -->
 <div class="page" id="appstart">
 	<div class="header">
@@ -238,7 +239,7 @@ function initApp() {
 		<a class="button1" href="#info">Info</a>
 	</div>
 	<div class="content">
-		<br />
+		<br>
 		<h2>Overview</h2>
 		<p>This is the <a href="https://www.cjpj.de/appshell.htm" target="_blank" rel="noopener">Simple App Shell</a>. It provides a simple and basic HTML, CSS and Javascript shell for your Progessive Web App.
 		You can find sample web apps under <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">www.cjpj.de/webapps.htm</a>.</p>
@@ -248,7 +249,7 @@ function initApp() {
 			<li><a href="https://www.cjpj.de/appshell.htm#swcache" target="_blank" rel="noopener">Serviceworker Caching</a></li>
 			<li><a href="https://www.cjpj.de/appshell.htm#basicui" target="_blank" rel="noopener">Basic User Interface</a></li>
 		</ul>
-		<br />
+		<br>
 		<p class="footer">Simple App Shell <span class="fversion"></span></p>
 	</div>	
 </div>
@@ -262,11 +263,11 @@ function initApp() {
 		<a class="button1" href="#info">Info</a>
 	</div>
 	<div class="content">
-		<br />
+		<br>
 		<h2>Sample Topic</h2>
-		<p>This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.<br />
-		This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.<br />
-		This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.<br />
+		<p>This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.<br>
+		This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.<br>
+		This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.<br>
 		This is a sample text with sample <a href="https://www.cjpj.de/webapps.htm" target="_blank" rel="noopener">link</a>.</p>
 		<ul>
 			<li>Sample List Element</li>
@@ -280,8 +281,8 @@ function initApp() {
 		<div style="text-align:center">
 		<button class="bsmall blite" type="button" onclick="alert('Button Small Lite');">Button small</button>
 		<button class="bsmall" type="button" onclick="alert('Button Small');">Button small</button>
-		<br />
-		<br />
+		<br>
+		<br>
 		<label for="selectbox">Select Box Label</label>
 		<select name="selectbox" id="selectbox">
 			<option value="0" selected="selected">Select Box</option>
@@ -290,23 +291,23 @@ function initApp() {
 			<option value="3">Value 3</option>
 		</select>
 		</div>
-		<br />
+		<br>
 		<label for="inputtext">Text Input Label:</label>
-		<input type="text" name="inputtext" id="inputtext" value="" placeholder="Sample Input Text" />
-		<br />
+		<input type="text" name="inputtext" id="inputtext" value="" placeholder="Sample Input Text">
+		<br>
 		<ul class="radiolist">
-			<li><input type="radio" name="radioType" id="radio0" value="0" /><label id="labelr0" for="radio0" class="color_0">Radio Button Label 0</label></li>
-			<li><input type="radio" name="radioType" id="radio1" value="1" /><label id="labelr1" for="radio1" class="color_1">Radio Button Label 1</label></li>
-			<li><input type="radio" name="radioType" id="radio2" value="2" /><label id="labelr2" for="radio2" class="color_2">Radio Button Label 2</label></li>
+			<li><input type="radio" name="radioType" id="radio0" value="0"><label id="labelr0" for="radio0" class="color_0">Radio Button Label 0</label></li>
+			<li><input type="radio" name="radioType" id="radio1" value="1"><label id="labelr1" for="radio1" class="color_1">Radio Button Label 1</label></li>
+			<li><input type="radio" name="radioType" id="radio2" value="2"><label id="labelr2" for="radio2" class="color_2">Radio Button Label 2</label></li>
 		</ul>
-		<br />
+		<br>
 		<fieldset>
 			<legend> Check Box Legend </legend>
-			<input type="checkbox" name="cbox0" id="cbox0" value="" /><label class="cblabel" id="labelc0" for="cbox0">Check Box Label 0</label><br />
-			<input type="checkbox" name="cbox1" id="cbox1" value="" /><label class="cblabel" id="labelc1" for="cbox1">Check Box Label 1</label><br />
-			<input type="checkbox" name="cbox2" id="cbox2" value="" /><label class="cblabel" id="labelc2" for="cbox2">Check Box Label 2</label><br />
+			<input type="checkbox" name="cbox0" id="cbox0" value=""><label class="cblabel" id="labelc0" for="cbox0">Check Box Label 0</label><br>
+			<input type="checkbox" name="cbox1" id="cbox1" value=""><label class="cblabel" id="labelc1" for="cbox1">Check Box Label 1</label><br>
+			<input type="checkbox" name="cbox2" id="cbox2" value=""><label class="cblabel" id="labelc2" for="cbox2">Check Box Label 2</label><br>
 		</fieldset>
-		<br />
+		<br>
 		<table>
 			<tr><th>Head1</th><th>Head2</th><th>Head3</th><th>Head4</th></tr>
 			<tr><td>cell11</td><td>cell12</td><td>cell13</td><td>cell14</td></tr>
@@ -314,7 +315,7 @@ function initApp() {
 			<tr><td>cell31</td><td>cell32</td><td>cell33</td><td>cell34</td></tr>
 			<tr><td>cell41</td><td>cell42</td><td>cell43</td><td>cell44</td></tr>
 		</table>
-		<br />
+		<br>
 		<p class="footer">Footer with Version: <span class="fversion"></span></p>
 	</div>
 </div>
@@ -329,14 +330,14 @@ function initApp() {
 	<div class="content">
 		<h2 style="margin-top:8px">About</h2>
 		<p>Your app information can be included here (description, legal stuff, etc.)</p>
- 		<hr />
+ 		<hr>
 		<h2>Status</h2>
 		<ul>
 			<li>Network: <strong id="snet">-</strong></li>
 			<li>Cached: <strong id="scache">-</strong></li>
 			<li>Update: <strong id="supdate">No Update available</strong></li>
 		</ul>
-		<hr />
+		<hr>
 		<h2>Info</h2>
 		<ul>
 			<li>App Title: <strong>Your App Title</strong></li>
@@ -347,7 +348,7 @@ function initApp() {
 			<li><a href="#" target="_blank" rel="noopener">Terms of Use (License)</a></li>
 			<li><a href="#" target="_blank" rel="noopener">Data Protection</a></li>
 		</ul>
-		<hr />
+		<hr>
 		<h2>Imprint</h2>
 		<ul>
 			<li>Author: Your name</li>
@@ -358,12 +359,12 @@ function initApp() {
 			<li>Email: <a href="#">Your email</a></li>
 			<li>Website: <a href="#" target="_blank" rel="noopener">Your website</a></li>
 		</ul>
-		<hr />
+		<hr>
 		<h2>Open Source Licenses</h2>
 		<ul>
 			<li><a href="https://www.cjpj.de/appshell.htm" target="_blank" rel="noopener">Simple App Shell</a> licensed under <a href="https://www.cjpj.de/contact.htm#terms" target="_blank" rel="noopener">The MIT License (MIT)</a></li>
 		</ul>
-		<br />
+		<br>
 	</div>
 </div>
 

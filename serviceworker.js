@@ -1,9 +1,9 @@
 //########################################
 // serviceworker for Simple App Shell
-// Version: 18.02.2023 17:50
+// Version: 17.04.2023 15:50
 //########################################
 
-const cacheName = 'simple_appshell_23_02_18_17_50';
+const cacheName = 'simple_appshell_23_04_17_15_50';
 const urlsToCache = [
 	'/',
 	'/index.htm',
@@ -11,6 +11,7 @@ const urlsToCache = [
 	'/favicon.ico',
 	'/icon_144.png',
 	'/icon_192.png',
+	'/icon_196.png',
 	'/icon_512.png',
 	'/icon_maskable.png',
 	'/screenshot1.png',
