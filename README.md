@@ -23,7 +23,7 @@ With hash based navigation you can use back and forward buttons of your browser 
 Important: You can set an individual page id but you may not change the class="page".
 
 ```
-<body onload="initApp()">
+<body>
 ...
 <div class="page" id="appstart">
 	<div class="header">
