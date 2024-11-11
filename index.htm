@@ -4,7 +4,6 @@
 <!-- general  -->
 <title>Simple App Shell</title>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="keywords" content="webapp, pwa, app shell">
 <meta name="description" content="Simple App Shell">
 <meta name="Author" content="P. Janko">
@@ -21,6 +20,7 @@
 <meta name="theme-color" content="#cccccc">
 <link rel="icon" sizes="144x144" href="icon_144.png">
 <link rel="icon" sizes="192x192" href="icon_192.png">
+<link rel="icon" sizes="196x196" href="icon_196.png">
 <link rel="icon" sizes="512x512" href="icon_512.png">
 <!-- win tile icon and background  -->
 <meta name="msapplication-TileColor" content="#999999">
@@ -44,7 +44,7 @@ body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family
 .content			{padding: 0px; margin:0px; position:absolute; top:55px; left:0px; width:100%; color:#333333;; z-index:10;}
 .content h2			{padding: 0px; margin:10px 25px 10px 25px; font-size:20px; font-weight:bold;}
 .content p 			{padding: 0px; margin:10px 25px 10px 25px; font-size:14px; font-weight:normal; line-height: 20px}
-.content li			{padding: 0px 0px 5px 0px; margin: 0px; font-size:14px; font-weight:normal;}
+.content li			{padding: 0px 0px 5px 0px; margin: 0px; font-size:14px; font-weight:normal;; line-height: 20px}
 .content a			{color:#333333}
 
 .content button 		{padding:15px 10px 15px 10px; margin:0px; color:#eeeeee; text-align:center; background:#333333; border:1px solid #eeeeee; cursor:pointer; border-radius:5px; font-size:16px; font-weight:normal;}
@@ -74,6 +74,9 @@ body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family
 .content table td						{padding: 10px; text-align:center;}
 .content table tr:nth-child(odd) 		{background-color: #eeeeee;}
 
+.content .startleft		{left:10px;}
+.content .textcenter	{text-align:center;}
+
 
 /* ########## footer settings ##########  */
 p.footer			{padding:10px 0px 10px 0px; margin:0px; color:#333333; font-weight:normal; font-size:14px; text-align:center;}
@@ -97,8 +100,7 @@ p.footer a			{color:#333333}
 //##########################################################
 // Date			Version			Description
 // 18.01.2020	0.01		initial version
-// 07.02.2020	0.1			remove break from showPage() function,
-//							add hashchange handler to initapp() function
+// 07.02.2020	0.1			remove break from showPage() function, add hashchange handler to initapp() function
 // 28.02.2020	0.2			changed showPage(hashid) to showPage()
 // 10.04.2020	0.3			add new sample elements (text, radio, checkbox)
 // 19.04.2020	0.4			add table styles
@@ -106,6 +108,7 @@ p.footer a			{color:#333333}
 // 27.02.2021	0.6			use const and let instead of var
 // 18.02.2023	0.7			update manifest with screenshots and description
 // 17.04.2023	0.8			update manifest with id and icon_196.png, remove trailing slash on void elements
+// 10.11.2024	0.9			replace event handler with event listener, replace styles with classes, remove meta tag 'X-UA-Compatible'
 //##########################################################
 
 //strict mode
@@ -113,8 +116,8 @@ p.footer a			{color:#333333}
 
 //##########################################################
 //basic global vars
-const appVersion = "0.8";
-const appRelease = "17.04.2023";
+const appVersion = "0.9";
+const appRelease = "10.11.2023";
 //global array with all pages
 let appPages = new Array();
 
@@ -203,7 +206,7 @@ function setAppStatus() {
 
 //##########################################################
 //init app, set version, check deep links, show start page
-function initApp() {
+document.addEventListener("DOMContentLoaded", function(event) {
 	//fill array with pages
 	appPages = document.querySelectorAll("div.page");
 	//show start page or deep link page
@@ -219,7 +222,21 @@ function initApp() {
 	}
 	//set app status
 	setAppStatus();
-}
+	//###################################
+	//add application event listener
+	document.getElementById("topbutton2").addEventListener("click", function(event) {
+		alert('Button 2');
+	});
+	document.getElementById("buttonlarge").addEventListener("click", function(event) {
+		 alert("Button Large");
+	});
+	document.getElementById("buttonlite").addEventListener("click", function(event) {
+		 alert("Button Small Lite");
+	});
+	document.getElementById("buttonsmall").addEventListener("click", function(event) {
+		 alert("Button Small");
+	});
+});
 
 
 //##########################################################
@@ -229,12 +246,12 @@ function initApp() {
 //##########################################################
 </script>
 </head>
-<body onload="initApp()">
-<noscript><h1 style="text-align:center">Please activate Javascript<br>to run this web app!</h1></noscript>
+<body>
+<noscript><h1 class="textcenter">Please activate Javascript<br>to run this web app!</h1></noscript>
 <!-- ###################### START PAGE ##############################  -->
 <div class="page" id="appstart">
 	<div class="header">
-		<h1 style="left:10px">Simple App Shell</h1>
+		<h1 class="startleft">Simple App Shell</h1>
 		<a class="button2" href="#sample">Sample</a>
 		<a class="button1" href="#info">Info</a>
 	</div>
@@ -259,7 +276,7 @@ function initApp() {
 	<div class="header">
 		<a class="button0" href="#appstart">&lt;&lt;</a>
 		<h1>Sample Header</h1>
-		<a class="button2" href="javascript:void(0)" onclick="alert('Button 2');">Button 2</a>
+		<a class="button2" href="#sample" id="topbutton2">Button 2</a>
 		<a class="button1" href="#info">Info</a>
 	</div>
 	<div class="content">
@@ -276,11 +293,11 @@ function initApp() {
 			<li>Sample List Element</li>
 		</ul>
 		<h2>Sample Elements</h2>
-		<button class="blarge" type="button" onclick="alert('Button Large');">Button large</button>
+		<button class="blarge" type="button" id="buttonlarge">Button large</button>
 
-		<div style="text-align:center">
-		<button class="bsmall blite" type="button" onclick="alert('Button Small Lite');">Button small</button>
-		<button class="bsmall" type="button" onclick="alert('Button Small');">Button small</button>
+		<div class="textcenter">
+		<button class="bsmall blite" type="button" id="buttonlite">Button small</button>
+		<button class="bsmall" type="button" id="buttonsmall">Button small</button>
 		<br>
 		<br>
 		<label for="selectbox">Select Box Label</label>
@@ -328,7 +345,8 @@ function initApp() {
 		<a class="button1" href="#appstart">Button 1</a>
 	</div>
 	<div class="content">
-		<h2 style="margin-top:8px">About</h2>
+		<br>
+		<h2>About</h2>
 		<p>Your app information can be included here (description, legal stuff, etc.)</p>
  		<hr>
 		<h2>Status</h2>
