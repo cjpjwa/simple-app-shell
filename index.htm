@@ -40,6 +40,7 @@ body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family
 .header	a.button1	{display:block; top:10px; right:10px; text-decoration:none;}
 .header	a.button2	{display:block; top:10px; right:70px; text-decoration:none;}
 .header	a:active	{color:#333333; background:#eeeeee}
+.header	.startleft	{left:10px;}
 
 .content			{padding: 0px; margin:0px; position:absolute; top:55px; left:0px; width:100%; color:#333333;; z-index:10;}
 .content h2			{padding: 0px; margin:10px 25px 10px 25px; font-size:20px; font-weight:bold;}
@@ -74,9 +75,7 @@ body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family
 .content table td						{padding: 10px; text-align:center;}
 .content table tr:nth-child(odd) 		{background-color: #eeeeee;}
 
-.content .startleft		{left:10px;}
-.content .textcenter	{text-align:center;}
-
+.textcenter		{text-align:center;}
 
 /* ########## footer settings ##########  */
 p.footer			{padding:10px 0px 10px 0px; margin:0px; color:#333333; font-weight:normal; font-size:14px; text-align:center;}
@@ -87,6 +86,11 @@ p.footer a			{color:#333333}
 #info .content p	{padding:  5px 30px 10px 30px; margin: 0px; text-align:justify}
 #info .content ul	{padding:  5px 30px 10px 30px; margin: 0px 0px 0px 5%}
 #info .content li	{text-align:left}
+
+/* ########## modal dialog settings ##########  */
+dialog			{padding:0px; width:260px; height:170px; background:#cccccc; box-shadow: 1px 1px 40px 1px #333333; border:1px solid #333333; border-radius:5px; text-align:center;}
+dialog p		{padding:0px; margin:25px 0px 20px 0px; font-size:16px; line-height:24px}
+dialog button	{padding:8px; margin:0px; color:#eeeeee; text-align:center; background:#333333; border:1px solid #eeeeee; width:80%; cursor:pointer; border-radius:5px; font-size:16px; font-weight:normal;}
 
 /* Larger than 800px  */
 @media (min-width: 800px) {
@@ -109,6 +113,7 @@ p.footer a			{color:#333333}
 // 18.02.2023	0.7			update manifest with screenshots and description
 // 17.04.2023	0.8			update manifest with id and icon_196.png, remove trailing slash on void elements
 // 10.11.2024	0.9			replace event handler with event listener, replace styles with classes, remove meta tag 'X-UA-Compatible'
+// 14.12.2024	0.10		add modal dialog sample, fix minor CSS issues
 //##########################################################
 
 //strict mode
@@ -116,8 +121,8 @@ p.footer a			{color:#333333}
 
 //##########################################################
 //basic global vars
-const appVersion = "0.9";
-const appRelease = "10.11.2023";
+const appVersion = "0.10";
+const appRelease = "14.12.2024";
 //global array with all pages
 let appPages = new Array();
 
@@ -236,8 +241,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	document.getElementById("buttonsmall").addEventListener("click", function(event) {
 		 alert("Button Small");
 	});
+	//modal dialog event listener
+	document.getElementById("dialogbutton").addEventListener("click", function(event) {
+		showDialogBox("This is the dialog message text.<br>This is the dialog message text.<br>This is the dialog message text.");
+	});
+	document.getElementById("dialogclose").addEventListener("click", function(event) {
+		document.getElementById("dialogbox").close();
+	});
 });
 
+//##########################################################
+//function for showing modal dialog
+//- msgtext:	message text [string]
+function showDialogBox(msgtext) {
+	try {
+		//show modal dialog
+		let modalDialog = document.getElementById("dialogbox");
+		document.getElementById("dialogtxt").innerHTML =  msgtext;
+		modalDialog.showModal();
+	} catch(err) {
+		//show alert box fallback for old browser
+		alert(msgtext);
+	}
+}
 
 //##########################################################
 //
@@ -294,7 +320,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		</ul>
 		<h2>Sample Elements</h2>
 		<button class="blarge" type="button" id="buttonlarge">Button large</button>
-
+		<button class="blarge" type="button" id="dialogbutton">Sample Dialog</button>
 		<div class="textcenter">
 		<button class="bsmall blite" type="button" id="buttonlite">Button small</button>
 		<button class="bsmall" type="button" id="buttonsmall">Button small</button>
@@ -385,6 +411,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		<br>
 	</div>
 </div>
-
+<!-- ###################### Dialog PAGE ##############################  -->
+<dialog id="dialogbox"><p id="dialogtxt"></p><button type="button" id="dialogclose">Close</button></dialog>
 </body>
 </html>
