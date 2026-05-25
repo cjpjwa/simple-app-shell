@@ -18,15 +18,15 @@
 <!-- chrome webapp  -->
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#cccccc">
-<link rel="icon" sizes="144x144" href="icon_144.png">
-<link rel="icon" sizes="192x192" href="icon_192.png">
-<link rel="icon" sizes="196x196" href="icon_196.png">
-<link rel="icon" sizes="512x512" href="icon_512.png">
+<link rel="icon" type="image/png" sizes="144x144" href="icon_144.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon_192.png">
+<link rel="icon" type="image/png" sizes="196x196" href="icon_196.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon_512.png">
 <!-- win tile icon and background  -->
 <meta name="msapplication-TileColor" content="#999999">
 <meta name="msapplication-TileImage" content="icon_144.png">
 <!-- icon -->
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <style>
 /* ########## basic page settings ##########  */
 body				{padding:0px; margin:0px; background:#cccccc; color:#333333; font-family:sans-serif; overflow:auto;-webkit-text-size-adjust: none;}
@@ -114,6 +114,7 @@ dialog button	{padding:8px; margin:0px; color:#eeeeee; text-align:center; backgr
 // 17.04.2023	0.8			update manifest with id and icon_196.png, remove trailing slash on void elements
 // 10.11.2024	0.9			replace event handler with event listener, replace styles with classes, remove meta tag 'X-UA-Compatible'
 // 14.12.2024	0.10		add modal dialog sample, fix minor CSS issues
+// 25.05.2026	0.11		add type attr. to link tag
 //##########################################################
 
 //strict mode
@@ -121,8 +122,8 @@ dialog button	{padding:8px; margin:0px; color:#eeeeee; text-align:center; backgr
 
 //##########################################################
 //basic global vars
-const appVersion = "0.10";
-const appRelease = "14.12.2024";
+const appVersion = "0.11";
+const appRelease = "25.05.2026";
 //global array with all pages
 let appPages = new Array();
 
