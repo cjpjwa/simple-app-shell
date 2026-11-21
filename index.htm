@@ -115,6 +115,7 @@ dialog button	{padding:8px; margin:0px; color:#eeeeee; text-align:center; backgr
 // 10.11.2024	0.9			replace event handler with event listener, replace styles with classes, remove meta tag 'X-UA-Compatible'
 // 14.12.2024	0.10		add modal dialog sample, fix minor CSS issues
 // 25.05.2026	0.11		add type attr. to link tag
+// 21.11.2026	0.11		fix updateViaCache Bug in serviceworker
 //##########################################################
 
 //strict mode
@@ -122,8 +123,8 @@ dialog button	{padding:8px; margin:0px; color:#eeeeee; text-align:center; backgr
 
 //##########################################################
 //basic global vars
-const appVersion = "0.11";
-const appRelease = "25.05.2026";
+const appVersion = "0.12";
+const appRelease = "21.11.2026";
 //global array with all pages
 let appPages = new Array();
 
@@ -139,8 +140,9 @@ const msgS05 = "Update available - <a href=\"index.htm\">Load</a>";
 //register the serviceworker
 if ("serviceWorker" in navigator) {
 	window.addEventListener("load", function() {
-		navigator.serviceWorker.register("/serviceworker.js").then(function(registration) {
-			updateViaCache: "none";    //bypass http cache
+		navigator.serviceWorker.register("/serviceworker.js", {
+			updateViaCache: "none" 	//bypass http cache
+		}).then(function(registration) {
 			// Registration was successful
 			//console.log("ServiceWorker registration successful with scope: ", registration.scope);
 			//check for update
